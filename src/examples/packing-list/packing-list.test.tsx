@@ -1,4 +1,4 @@
-import { render, screen } from 'test/utilities';
+import { fireEvent, render, screen } from 'test/utilities';
 import PackingList from '.';
 
 it('renders the Packing List application', () => {
@@ -10,11 +10,18 @@ it('has the correct title', async () => {
   screen.getByText('Packing List');
 });
 
-it.todo('has an input field for a new item', () => {});
+it.todo('has an input field for a new item', () => {
+  render(<PackingList />);
+});
 
 it.todo(
   'has a "Add New Item" button that is disabled when the input is empty',
-  () => {},
+  () => {
+    render(<PackingList />);
+
+    expect(screen.getByRole('button', { name: 'Add New Item' })).toBeDisabled();
+
+  },
 );
 
 it.todo(
