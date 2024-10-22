@@ -14,15 +14,18 @@ it.todo('has an input field for a new item', () => {
   render(<PackingList />);
 });
 
-it.todo(
-  'has a "Add New Item" button that is disabled when the input is empty',
-  () => {
-    render(<PackingList />);
+it('has a "Add New Item" button that is disabled when the input is empty', async () => {
 
-    expect(screen.getByRole('button', { name: 'Add New Item' })).toBeDisabled();
+  const { user } = render(<PackingList />);
+  const addNewItemInput = screen.getByRole('searchbox');
 
-  },
-);
+  expect(addNewItemInput).toBeEmptyDOMElement();
+  expect(screen.getByRole('button', { name: 'Add New Item' })).toBeDisabled();
+
+  await user.type(addNewItemInput, 'Apple');
+  expect(screen.getByRole('button', { name: 'Add New Item' })).toBeEnabled();
+
+});
 
 it.todo(
   'enables the "Add New Item" button when there is text in the input field',
